@@ -67,12 +67,14 @@ def process_zip_files(zip_files_paths: list[Path]):
 
 def make_reports():
     """Entry point to make reports."""
-    zip_files_dir = Path('archives')
+    archives_path = Path('archives')
     reports_path = Path('reports')
+    if not archives_path.exists():
+        return
     if reports_path.exists():
         shutil.rmtree(reports_path)
     reports_path.mkdir()
-    zip_files_paths = (f for f in zip_files_dir.iterdir()
+    zip_files_paths = (f for f in archives_path.iterdir()
                        if f.suffix == '.zip')
     xml_files = process_zip_files(zip_files_paths)
     process_xml_files(xml_files)
