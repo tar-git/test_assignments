@@ -65,6 +65,15 @@ def process_zip_files(zip_files_paths: list[Path]):
         return chain(*result)
 
 
+def cleanup(archives_paths: list[Path]):
+    with Pool(cpu_count()) as pool:
+        async_results = [
+            pool.apply_async(shutil.rmtree, (path.parent / path.stem,))
+            for path in archives_paths
+        ]
+        [ar.get() for ar in async_results]
+
+
 def make_reports():
     """Entry point to make reports."""
     archives_path = Path('archives')
@@ -74,10 +83,11 @@ def make_reports():
     if reports_path.exists():
         shutil.rmtree(reports_path)
     reports_path.mkdir()
-    zip_files_paths = (f for f in archives_path.iterdir()
-                       if f.suffix == '.zip')
+    zip_files_paths = [f for f in archives_path.iterdir()
+                       if f.suffix == '.zip']
     xml_files = process_zip_files(zip_files_paths)
     process_xml_files(xml_files)
+    cleanup(zip_files_paths)
 
 
 if __name__ == '__main__':
