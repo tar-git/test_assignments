@@ -1,9 +1,10 @@
 """Create "num_zips" zip archives with "num_xmls_in_zip" random xml files each.
 
-See Readme.md for more details.
+See README.md for more details.
 """
 
-__all__ = ('generate_archives', 'num_zips', 'num_xmls_in_zip')
+__all__ = ('generate_archives', 'num_zips',
+           'num_xmls_in_zip', 'max_objects_in_xml')
 
 import random
 import string
@@ -18,7 +19,6 @@ num_zips = 50
 num_xmls_in_zip = 100
 max_objects_in_xml = 10
 letters_and_digits = string.ascii_letters + string.digits
-seen_random_strings = set()
 
 
 def random_string(n: int):

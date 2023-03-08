@@ -38,6 +38,8 @@ python make_reports.py
 ___
 ## Tests
 
+The program was tested on Python 3.10. No additional dependencies are required at this stage.
+
 To run all tests go to the xml_archives folder and run the following command
 ```py
 python -m unittest discover -v tests
